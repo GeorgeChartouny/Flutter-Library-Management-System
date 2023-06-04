@@ -164,7 +164,7 @@ class _UpdateBookPageState extends State<UpdateBookPage> {
         TextField(
           controller: additionalDetailsController,
           decoration: const InputDecoration(
-              label: Text("More Information (object format)")),
+              label: Text("More Information (type: Coding, level: Beginner)")),
         ),
         Container(
           margin: const EdgeInsets.only(top: 16.0),

@@ -41,7 +41,24 @@ class _AddBookPageState extends State<AddBookPage> {
         authorController.text.isEmpty ||
         pubYear == null ||
         categoryController.text.isEmpty) {
-      // add error message
+      // display alert that a required field is empty
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Error'),
+            content: const Text('All fields are required.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
       return;
     }
     // foramting the pubYear to the desired format
@@ -53,8 +70,9 @@ class _AddBookPageState extends State<AddBookPage> {
       "author": authorController.text,
       "pub_year": formattedPubYear,
       "category": categoryController.text,
-      "additional_details":
-          formatAdditionalDetails(additionalDetailsController.text),
+      if (additionalDetailsController.text.isNotEmpty)
+        "additional_details":
+            formatAdditionalDetails(additionalDetailsController.text),
     };
     await http.post(Uri.parse("http://127.0.0.1:8000/book/create"),
         body: requestBody);
@@ -119,7 +137,8 @@ class _AddBookPageState extends State<AddBookPage> {
         ),
         TextField(
           controller: additionalDetailsController,
-          decoration: const InputDecoration(label: Text("More Information")),
+          decoration: const InputDecoration(
+              label: Text("More Information (type: Coding, level: Beginner)")),
         ),
         Container(
           margin: const EdgeInsets.only(top: 16.0),
