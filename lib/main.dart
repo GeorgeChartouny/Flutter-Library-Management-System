@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:html';
+import 'dart:js_interop';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -171,11 +172,13 @@ class _MyHomePageState extends State<MyHomePage> {
                               style:
                                   const TextStyle(fontStyle: FontStyle.italic),
                             ),
-                            Text(
-                              'Additional Details: ${filteredBooks[index].additional_details}',
-                              style:
-                                  const TextStyle(fontStyle: FontStyle.italic),
-                            ),
+                            // display this field only when additional_details has data
+                            if (filteredBooks[index].additional_details != null)
+                              Text(
+                                'Additional Details: ${filteredBooks[index].additional_details}',
+                                style: const TextStyle(
+                                    fontStyle: FontStyle.italic),
+                              ),
                           ],
                         ),
                         contentPadding: const EdgeInsets.only(bottom: 20.0),
