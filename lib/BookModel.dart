@@ -2,12 +2,12 @@
 import 'dart:convert';
 
 class Book {
-  late int id;
-  late String title;
-  late String author;
-  late DateTime pub_year;
-  late String category;
-  late Object additional_details;
+  late int? id;
+  late String? title;
+  late String? author;
+  late String? pub_year;
+  late String? category;
+  late Object? additional_details;
   Book({
     required this.id,
     required this.title,
@@ -21,7 +21,7 @@ class Book {
     int? id,
     String? title,
     String? author,
-    DateTime? pub_year,
+    String? pub_year,
     String? category,
     Object? additional_details,
   }) {
