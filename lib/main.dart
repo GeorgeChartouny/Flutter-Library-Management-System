@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lmsproject/BookModel.dart';
 import 'package:lmsproject/addBook.dart';
+import 'package:lmsproject/updateBook.dart';
 
 void main() {
   runApp(const MyApp());
@@ -68,7 +69,6 @@ class _MyHomePageState extends State<MyHomePage> {
           additional_details: singleBook["additional_details"]);
       books.add(book);
     }
-    // setState(() {});
     return books;
   }
 
@@ -103,7 +103,20 @@ class _MyHomePageState extends State<MyHomePage> {
                     snapshot.data[index].title,
                     style: const TextStyle(fontSize: 25, color: Colors.grey),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => UpdateBookPage(
+                                title: snapshot.data[index].title,
+                                author: snapshot.data[index].author,
+                                category: snapshot.data[index].category,
+                                pub_year: snapshot.data[index].pub_year,
+                                additional_details:
+                                    snapshot.data[index].additional_details,
+                                id: snapshot.data[index].id,
+                              )),
+                    );
+                  },
                   trailing: IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () => deleteBook(snapshot.data[index].id),
