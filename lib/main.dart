@@ -98,7 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
             return book.title!.toLowerCase().contains(lowerCaseSearchWord) ||
                 book.author!.toLowerCase().contains(lowerCaseSearchWord) ||
                 book.category!.toLowerCase().contains(lowerCaseSearchWord) ||
-                book.pub_year!.contains(searchWord);
+                book.pub_year!.contains(searchWord) ||
+                jsonEncode(book.additional_details)
+                    .toLowerCase()
+                    .contains(lowerCaseSearchWord);
           }).toList();
 
     return Scaffold(
