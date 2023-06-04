@@ -1,4 +1,8 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:lmsproject/BookModel.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,13 +35,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  // to make http requests
+  Client client = http.Client() as Client;
+  List<Book> books = [];
+// whenever this part gets rendered, this function will be called
+  @override
+  void initState() {
+    super.initState();
   }
+
+  void _addBook() {}
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _addBook,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
