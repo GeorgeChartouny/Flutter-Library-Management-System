@@ -4,6 +4,7 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lmsproject/BookModel.dart';
+import 'package:lmsproject/addBook.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,7 +38,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   // to make http requests
-  http.Client client = http.Client();
+  // http.Client client = http.Client();
   List<Book> books = [];
 // whenever this part gets rendered, this function will be called
   @override
@@ -46,12 +47,11 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
+  String url = "http://127.0.0.1:8000";
 // retrieving all the books we have
   Future<List<Book>> fetchBooks() async {
-    String url = "http://127.0.0.1:8000/books";
-
 // get all books request
-    final response = await http.get(Uri.parse(url));
+    final response = await http.get(Uri.parse("$url/books"));
 
     var responseData = json.decode(response.body);
 
@@ -73,6 +73,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _addBook() {}
+
+  void deleteBook(int id) {
+    http.delete(Uri.parse("$url/book/$id/delete"));
+    fetchBooks();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +101,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   title: Text(
                     snapshot.data[index].title,
                     style: const TextStyle(fontSize: 25, color: Colors.grey),
+                  ),
+                  onTap: () {},
+                  trailing: IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () => deleteBook(snapshot.data[index].id),
                   ),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,7 +137,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _addBook,
+        onPressed: () =>
+            MaterialPageRoute(builder: (context) => const AddBookPage()),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
