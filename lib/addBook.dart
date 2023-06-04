@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:lmsproject/main.dart';
 
 class AddBookPage extends StatefulWidget {
   const AddBookPage({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class _AddBookPageState extends State<AddBookPage> {
   final TextEditingController additionalDetailsController =
       TextEditingController();
 
+// addBook Function, check if required fields are not empty before calling the post api
   Future<void> addBook() async {
     if (titleController.text.isEmpty ||
         authorController.text.isEmpty ||
@@ -25,8 +27,9 @@ class _AddBookPageState extends State<AddBookPage> {
       // add error message
       return;
     }
-
+    // foramting the pubYear to the desired format
     String formattedPubYear = DateFormat("yyyy-MM-dd").format(pubYear!);
+
     // map the values added into an object
     Map<String, dynamic> requestBody = {
       "title": titleController.text,
@@ -37,9 +40,15 @@ class _AddBookPageState extends State<AddBookPage> {
     };
     await http.post(Uri.parse("http://127.0.0.1:8000/book/create"),
         body: requestBody);
-    Navigator.pop(context);
+    //recall the fetch all books function to display the added data
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const MyApp(),
+      ),
+    );
   }
 
+  // show a date picker when pressing on the field of pub_year
   Future<void> selectPubYear() async {
     final DateTime? selectedDate = await showDatePicker(
       context: context,
@@ -47,7 +56,7 @@ class _AddBookPageState extends State<AddBookPage> {
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     );
-
+    // checking if pubYear is not empty, get the year,month,day
     if (selectedDate != null) {
       setState(() {
         pubYear = DateTime(

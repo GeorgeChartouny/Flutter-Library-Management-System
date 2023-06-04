@@ -76,7 +76,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void deleteBook(int id) {
     http.delete(Uri.parse("$url/book/$id/delete"));
-    fetchBooks();
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const MyApp()));
   }
 
   @override
