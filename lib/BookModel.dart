@@ -1,8 +1,8 @@
-class Book{
-    int id;
-    String title;
-    String author;
-    Date pub_year;
-    String category;
-    Json additional_details;
+class Book {
+  late int id;
+  late String title;
+  late String author;
+  late DateTime pub_year;
+  late String category;
+  late Object additional_details;
 }
