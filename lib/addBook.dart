@@ -18,6 +18,23 @@ class _AddBookPageState extends State<AddBookPage> {
   final TextEditingController additionalDetailsController =
       TextEditingController();
 
+  // formatting the additional_details to json format
+  String formatAdditionalDetails(String additionalDetails) {
+    print(additionalDetails);
+    if (additionalDetails == null) {
+      return '';
+    }
+
+    //split the input by comma and remove the white space
+    final keyValuePairs = additionalDetails.split(',').map((pair) {
+      final parts = pair.split(':');
+      final key = parts[0].trim();
+      final value = parts[1].trim();
+      return '"$key":"$value"';
+    });
+    return '{${keyValuePairs.join(',')}}';
+  }
+
 // addBook Function, check if required fields are not empty before calling the post api
   Future<void> addBook() async {
     if (titleController.text.isEmpty ||
@@ -36,7 +53,8 @@ class _AddBookPageState extends State<AddBookPage> {
       "author": authorController.text,
       "pub_year": formattedPubYear,
       "category": categoryController.text,
-      "additional_details": additionalDetailsController.text,
+      "additional_details":
+          formatAdditionalDetails(additionalDetailsController.text),
     };
     await http.post(Uri.parse("http://127.0.0.1:8000/book/create"),
         body: requestBody);
