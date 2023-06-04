@@ -44,12 +44,18 @@ class _UpdateBookPageState extends State<UpdateBookPage> {
     categoryController.text = widget.category;
     if (widget.additional_details != null) {
       if (widget.additional_details is String) {
+        print("is String");
         additionalDetailsController.text = widget.additional_details!;
       } else {
+        print("addit: ${widget.additional_details} ");
         additionalDetailsController.text =
-            jsonEncode(widget.additional_details!);
+            jsonEncode(widget.additional_details!)
+                .replaceAll('"', '')
+                .replaceAll('{', '')
+                .replaceAll("}", '');
       }
     } else {
+      print("else2");
       additionalDetailsController.text = '';
     }
 
