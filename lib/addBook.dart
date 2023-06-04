@@ -1,10 +1,10 @@
-class AddBookPage extends StatelessWidget{
-    const ({Key? key}) : super {key: key};
+import 'package:flutter/material.dart';
 
-    @override
-    Widget build(BuildContext context) {
-        return Container(
+class AddBookPage extends StatelessWidget {
+  const AddBookPage({super.key});
 
-        );
-    }
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }
