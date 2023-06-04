@@ -137,9 +137,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-            MaterialPageRoute(builder: (context) => const AddBookPage()),
-        tooltip: 'Increment',
+        onPressed: () => Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const AddBookPage()),
+        ),
+        tooltip: 'AddBook',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
